@@ -1,5 +1,22 @@
 apply plugin: 'com.android.application'
 
+buildscript{
+    repositories{
+        jcenter()
+    }
+
+    dependencies{
+        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.5.0'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
+
+}
+
+apply plugin:'com.android.application'
+apply plugin: 'com.getkeepsafe.dexcount'
+apply plugin: 'com.neenbedankt.android-apt'
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -17,10 +34,47 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions{
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    testOptions{
+        unitTests.returnDefaultValues = true
+    }
+
+
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
+
+    //Dagger 2
+    apt "com.google.dagger:dagger-compiler:2.2"
+    provided "javax.annotation:jsr250-api:1.0"
+
+    compile "javax.inject:javax.inject:1"
+    compile "com.google.dagger:dagger:2.2"
+
     compile 'com.android.support:appcompat-v7:23.3.0'
+    compile "com.android.support:support-v4:23.3.0"
+    compile "com.android.support:design:23.3.0"
+
+    //Retrofit, rxjava, okhttp
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.0.0-RC1'
+    compile 'com.squareup.okio:okio:1.8.0'
+
+    //RX android
+    compile "io.reactivex:rxandroid:1.2.0"
+    compile "io.reactivex:rxjava:1.1.4"
+
+    testCompile 'junit:junit:4.12'
+    testCompile "org.mockito:mockito-all:1.10.19"
+    testApt "com.google.dagger:dagger-compiler:2.2"
+
 }
