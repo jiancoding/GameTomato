@@ -13,6 +13,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        getInjector().inject(this);
 
     }
 
@@ -24,6 +25,4 @@ public class SplashActivity extends AppCompatActivity {
     @Subcomponent(modules = {SplashModule.class})
     public interface SplashComponent extends SplashInjector {
     }
-
-
 }
